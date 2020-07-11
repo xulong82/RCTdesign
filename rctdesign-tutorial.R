@@ -1,6 +1,14 @@
 library(gsDesign) # Keaven Anderson, AVP at Merck
 library(RCTdesign) # Scott Emerson, UW
 
+# how to design studies with unequally-spaced interim analyses?
+# use sample.size argument
+
+base <- seqDesign(prob.model = "hazard", arms = 2, ratio = c(1,1), null.hypothesis = 1, alt.hypothesis = 0.67, test.type = "less", alpha = 0.025)
+update(base, nbr.analyses = 4)
+update(base, nbr.analyses = 4, sample.size = c(0.25, 0.5, 0.75, 1))
+update(base, nbr.analyses = 4, sample.size = c(0.10, 0.25, 0.75, 1))
+
 # Definition of candidate designs for the CLL trial
 
 base <- seqDesign(prob.model = "hazard", arms = 2, ratio = c(1,1), null.hypothesis = 1, alt.hypothesis = 0.67, test.type = "less", alpha = 0.025)
