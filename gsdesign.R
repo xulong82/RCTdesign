@@ -140,6 +140,10 @@ x1 = - log(0.8) / 6
 x2 = - log(0.6) / 6
 
 y1 = gsSurv(hr0 = 1, hr = 0.6, alpha = 0.025, sided = 1, beta = 0.2, ratio = 2, lambdaC = log(2)/4.5,  # test parameter 
+            k = 2, timing = 0.4, test.type = 1, sfu = NULL, sfl = sfLDOF, # boundary
+            R = 22, T = 28, minfup = 6, eta = x1, etaE = x2) # accrual and dropouts
+
+y1 = gsSurv(hr0 = 1, hr = 0.6, alpha = 0.025, sided = 1, beta = 0.2, ratio = 2, lambdaC = log(2)/4.5,  # test parameter 
             k = 2, timing = 0.4, test.type = 1, sfl = sfLDOF, # boundary
             R = 22, T = 28, minfup = 6, eta = x1, etaE = x2) # accrual and dropouts
 

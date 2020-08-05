@@ -1,8 +1,25 @@
-library(gsDesign)
-library(tibble)
-library(ggplot2)
-library(scales)
-library(gt)
+easypackages::libraries("gsDesign", "tibble", "ggplot2", "scales", "gt")
+
+nNor = nNormal(delta1 = .33, sd = 1, alpha = .025, beta = .2)
+nNor = 2 * ceiling(nNor / 2)
+
+gsx = gsDesign(k = 2, timing = .5, alpha = .025, beta = .2, n.fix = nNor, delta1 = .33, overrun = 75, sfu = sfPower, sfl = sfPower, sfupar = 3.275, sflpar = 1.5)
+plot(gsx)
+plot(gsx, plottype = "asn")
+gsProbability(d = gsx, theta = c(0, 0.27, 0.33) / 2)$en
+plot(gsx, plottype = "power")
+
+z <- seq(0, 4, .0125)
+n2 = gsx$n.I[2] - gsx$n.I[1]
+cphat = condPower(z1 = z, n2 = n2, x = gsx)
+cp1 = condPower(z1 = z, n2 = n2, x = gsx, theta = gsx$delta)
+
+cp = rbind(data.frame(z1 = z, CP = cphat, grp = 1), data.frame(z1 = z, CP = cp1, grp = 2))
+ggplot(data = cp, aes(x = z1, y = CP, lty = as.factor(grp))) + geom_line()
+
+n2o = ssrCP(z1 = z, x = gsx, cpadj = c(.3, .8), overrun = 75)
+Power.ssrCP(n2o, theta = .27/2)
+plot(n2o)
 
 ### what is exactly the combination test, and how the CHW method was specified in the gsDesign::ssrCP function?
 
