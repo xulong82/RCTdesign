@@ -96,6 +96,3 @@ plot(interim3.fit, xlim = c(0, 4))
 
 # Figure 8 : Comparison of implemented and original design
 plot( interim3, dsnLbls=c("Implemented Design", "Original Design") )
-
-## ----------------------------------------------------------------------------------------------------------------------------------------------------
-

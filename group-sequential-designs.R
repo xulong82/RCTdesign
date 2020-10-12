@@ -1,5 +1,64 @@
 library(RCTdesign)
 
+# Binary endpoints
+
+xxx = seqDesign(prob.model = "proportion", arms = 2, null.hypothesis = .3, alt.hypothesis = .23, 
+                nbr.analyses = 1, test.type = "less", power = .8, alpha = .025)
+
+xxx = update(xxx, display.scale = "Z")
+
+kkk = update(xxx, test.type = "two.sided")
+update(kkk, test.type = "two.sided", alpha = 0.025)
+update(kkk, test.type = "two.sided", alpha = 0.05)
+
+xx2 = update(xxx, sample.size = 1700, power = "calculate")
+
+update(xx2, display.scale = "Z")
+update(xx2, display.scale = "P")
+
+obf2 = update(xx2, nbr.analyses = 2)
+obf3 = update(xx2, nbr.analyses = 3)
+obf4 = update(xx2, nbr.analyses = 4)
+obf4x = update(obf4, early.stopping = "alternative")
+obf4y = update(obf4, early.stopping = "null") # stop only for futility
+obf4z = update(obf4, early.stopping = "null", nonbinding.futility = T) # 
+
+seqPlotBoundary(obf2, obf3, obf4)
+seqPlotASN(obf2, obf3, obf4)
+seqPlotPower(obf2, obf3, obf4)
+seqPlotBoundary(obf4, obf4x)
+
+obf2 = update(xxx, nbr.analyses = 2)
+obf3 = update(xxx, nbr.analyses = 3)
+obf4 = update(xxx, nbr.analyses = 4)
+
+seqPlotASN(obf2, obf3, obf4)
+
+obf4x = update(obf4, early.stopping = "alternative")
+obf4y = update(obf4, early.stopping = "null") # stop only for futility
+
+obf4z = update(obf4, P = c(1, 0.8)) # stop only for futility
+seqPlotBoundary(obf4, obf4z)
+
+obf4k = update(obf4, P = c(1, Inf)) # stop only for futility
+obf4f = update(obf4, early.stopping = "alternative") # stop only for futility
+
+seqPlotPower(obf4, obf4x, reference = T)
+
+update(xxx, sample.size = 1700, power = "calculate")
+update(xxx, sample.size = 1700, power = "calculate", display.scale = "Z")
+
+update(xxx, sample.size = 700, power = "calculate")
+
+update(xxx, null.hypothesis = .4, alt.hypothesis = 0.35)
+
+seqInference(xxx)
+
+# time to event
+
+xxx = seqDesign(prob.model = "hazard", arms = 2, null.hypothesis = 1, alt.hypothesis = 0.67, test.type = "less", power = 0.8)
+seqPHSubjects(xxx, controlMedian = 9, accrualTime = 36, followupTime = 12)
+
 # Early stopping only for efficacy, for efficacy and futility, and how would it affect the efficacy boundaries?
 
 base <- seqDesign(prob.model = "hazard", arms = 2, ratio = c(1,1), null.hypothesis = 1, alt.hypothesis = 0.5, test.type = "less", alpha = 0.025, power = 0.9)
