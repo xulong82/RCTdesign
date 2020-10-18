@@ -5,6 +5,7 @@ library(RCTdesign)
 xxx = seqDesign(prob.model = "proportion", arms = 2, null.hypothesis = .3, alt.hypothesis = .23, 
                 nbr.analyses = 1, test.type = "less", power = .8, alpha = .025)
 
+update(xxx, display.scale = "P")
 xxx = update(xxx, display.scale = "Z")
 
 kkk = update(xxx, test.type = "two.sided")
